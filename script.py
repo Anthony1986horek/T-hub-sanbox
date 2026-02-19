@@ -5,6 +5,8 @@ import json
 import os
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+import dataframe_image as dfi
+
 
 file = 'https://raw.githubusercontent.com/jbrooksuk/JSON-Airports/refs/heads/master/airports.json'
 
@@ -47,11 +49,11 @@ class GetAirports:
 
     @staticmethod
     def put_data_into_table():
-            load_dotenv()
-            user = os.getenv("DB_USER")
-            password = os.getenv("DB_PASSWORD")
-            engine = create_engine(f'postgresql://{user}:{password}@localhost:5432/postgres')
-            GetAirports.parsing_data().to_sql('airports', engine, if_exists='replace', index=False)
+        load_dotenv()
+        user = os.getenv("DB_USER")
+        password = os.getenv("DB_PASSWORD")
+        engine = create_engine(f'postgresql://{user}:{password}@localhost:5432/postgres')
+        GetAirports.parsing_data().to_sql('airports', engine, if_exists='replace', index=False)
 
 
     @staticmethod
@@ -61,15 +63,25 @@ class GetAirports:
         password = os.getenv("DB_PASSWORD")
         engine = create_engine(f'postgresql://{user}:{password}@localhost:5432/postgres')
         df = pd.read_sql("""SELECT * FROM airports LIMIT 20;""", engine)
-        print(df)
+        return df
+
+
+    @staticmethod
+    def create_image_of_result():
+        dfi.export(GetAirports.get_data_from_table(), 'image_of_result')
+        print(f'The image_of_result was created')
+
 
 
 def main():
         if GetAirports.query_to_api():
             GetAirports.parsing_data()
             GetAirports.create_table()
-            # GetAirports.put_data_into_table()
+            GetAirports.put_data_into_table()
             GetAirports.get_data_from_table()
+            GetAirports.create_image_of_result()
 
 if __name__ == "__main__":
      main()
+
+
