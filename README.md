@@ -1,9 +1,9 @@
 Привет! Для запуска проекта необходимо выполнить следующие шаги:
 1. Создать новую директорию;
-2. Находясь в директории, скачать проект ***git@github.com:Anthony1986horek/T-hub-sanbox.git***
+2. Находясь в директории, скачать проект [git@github.com:Anthony1986horek/T-hub-sanbox.git]
 3. В текущей директории создать директорию ***.env***, в которой нужно сохранить следующие переменные окружения:
     ***DB_USER='user' 
     DB_PASSWORD='password'*** 
-4. В терминале запустить команду docker ***run --name postgres -d -p 5432:5432 -e POSTGRES_USER='user' -e POSTGRES_PASSWORD='password' postgres***
+4. В терминале запустить команду ***docker run --name postgres -d -p 5432:5432 -e POSTGRES_USER='user' -e POSTGRES_PASSWORD='password' postgres***
 5. В текущей директории запустить файл ***script.py*** в интегрированной среде разработки
 
